@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'inventory',
     'debug_toolbar',
     'drf_yasg',
-    'django_on_heroku'
+    'django_on_heroku',
+    'django_heroku'
 ]
 
 MIDDLEWARE = [
@@ -178,5 +179,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 
-import django_on_heroku
-django_on_heroku.settings(locals())
+# import django_on_heroku
+import django_heroku
+django_heroku.settings(locals())
