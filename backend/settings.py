@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'inventory',
     'debug_toolbar',
     'drf_yasg',
+    'django_on_heroku'
 ]
 
 MIDDLEWARE = [
