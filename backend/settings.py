@@ -49,9 +49,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'inventory.auth_middleware.JWTAuthenticationMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'inventory.auth_middleware.JWTAuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -180,15 +180,36 @@ LOGGING = {
     },
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'https://imaginative-souffle-9a3cea.netlify.app/',  # Update with your frontend URL
-    'https://imaginative-souffle-9a3cea.netlify.app/dashboard'
+CSRF_TRUSTED_ORIGINS = [
+    'https://imaginative-souffle-9a3cea.netlify.app/'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'https://imaginative-souffle-9a3cea.netlify.app/',  # Update with your frontend URL
+]
+
+CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "token"
+)
+
 # For development, you can allow all origins
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS='*'
-CORS_ALLOW_METHODS='*'
+# CORS_ALLOW_ALL_ORIGINS = True
+
 
 # DEBUG_TOOLBAR_CONFIG = {
 #     'INTERCEPT_REDIRECTS': False,
