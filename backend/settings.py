@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-)4y#&r(__ah4m^+9htu6!0-(*ql%738yl-*&e1^_!4$x)dh3-%'
+SECRET_KEY = 'django-insecure-)4y#&r(__ah4m^+9htu6!0-(*ql%738yl-*&e1^_!4$x)dh3-%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'inventory',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'drf_yasg',
     'django_on_heroku',
     'django_heroku'
@@ -86,9 +86,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'kaizntree',
+        'USER' : 'postgres',
+        'PASSWORD' : 'postgres',
+        'HOST' : 'kaizntree-1.cd64eac4644h.ap-south-1.rds.amazonaws.com',
+        'PORT' : '5432',
     }
 }
 
@@ -172,11 +180,11 @@ LOGGING = {
     },
 }
 
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
-    'SQL_WARNING_THRESHOLD': 100,  # Customize this threshold as needed
-}
+# DEBUG_TOOLBAR_CONFIG = {
+#     'INTERCEPT_REDIRECTS': False,
+#     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+#     'SQL_WARNING_THRESHOLD': 100,  # Customize this threshold as needed
+# }
 
 
 # import django_on_heroku
