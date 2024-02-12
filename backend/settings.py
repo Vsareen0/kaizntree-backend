@@ -175,3 +175,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
     'SQL_WARNING_THRESHOLD': 100,  # Customize this threshold as needed
 }
+
+
+import django_on_heroku
+django_on_heroku.settings(locals())
