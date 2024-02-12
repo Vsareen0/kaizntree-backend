@@ -17,7 +17,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from users.views import create_account, login, forgot_password_request, reset_password
-from inventory.views import create_item, create_category, get_items, create_tag
+from inventory.views import create_item, create_category, get_items, create_tag, get_category, get_tags
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -46,7 +46,9 @@ urlpatterns = [
     path('api/inventory/list', get_items),
     path('api/inventory/add', create_item),
     path('api/inventory/category', create_category),
-    path('api/inventory/tag', create_tag)
+    path('api/inventory/tag', create_tag),
+    path('api/inventory/categories', get_category),
+    path('api/inventory/tags', get_tags)
 ]
 
 
