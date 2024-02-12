@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import GetItemSerializer, AddItemSerializer, CategorySerializer, TagSerializer, DateRangeSerializer
-from .models import Item
+from .models import Item, Category, Tags
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
@@ -75,7 +75,7 @@ def get_items(request):
      - search (str): Optional. Search term to filter items by name or SKU.
 
     Returns:
-    - 201 Created: Item created successfully.
+    - 200: Item fetched successfully.
     - 400 Bad Request: Invalid data provided/Some error occured.
     
     - count (number): Total items in inventory.
@@ -219,3 +219,78 @@ def create_tag(request):
         print("Serialized data:", serializer.data)
 
         return Response({ 'message': 'Something went wrong !' }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@swagger_auto_schema(
+    method='get',
+    manual_parameters=get_headers(),
+)
+@api_view(['GET'])
+def get_category(request):
+    """
+    API endpoint to get all category.
+
+    Parameters:
+     
+    Returns:
+    - 200: Category fetched.
+    - 400 Bad Request: Invalid data provided/Some error occured.
+    
+
+    An Array of results with below attributes.
+    - id (number): The id of category.
+    - name (string): The name of category .
+    """
+    try:
+        items = Category.objects.all()
+
+        return Response({
+            'data': items
+        }, status=status.HTTP_200_OK)
+    
+    except Exception as ex:
+        template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+
+        return Response({ 'message': 'Unable to get category' }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@swagger_auto_schema(
+    method='get',
+    manual_parameters=get_headers(),
+)
+@api_view(['GET'])
+def get_tags(request):
+    """
+    API endpoint to get all tags.
+
+    Parameters:
+     
+    Returns:
+    - 200: Tags fetched.
+    - 400 Bad Request: Invalid data provided/Some error occured.
+    
+
+    An Array of results with below attributes.
+    - id (number): The id of tag.
+    - name (string): The name of tag.
+    - img (string): The img of tag.
+    """
+    try:
+        items = Tags.objects.all()
+
+        return Response({
+            'data': items
+        }, status=status.HTTP_200_OK)
+    
+    except Exception as ex:
+        template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+
+        return Response({ 'message': 'Unable to get tags' }, status=status.HTTP_400_BAD_REQUEST)
+
