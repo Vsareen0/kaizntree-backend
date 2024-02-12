@@ -182,10 +182,11 @@ LOGGING = {
 
 CORS_ALLOWED_ORIGINS = [
     'https://imaginative-souffle-9a3cea.netlify.app/',  # Update with your frontend URL
+    'https://imaginative-souffle-9a3cea.netlify.app/dashboard'
 ]
 
 # For development, you can allow all origins
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # DEBUG_TOOLBAR_CONFIG = {
 #     'INTERCEPT_REDIRECTS': False,
