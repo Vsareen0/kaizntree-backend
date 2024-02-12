@@ -181,11 +181,13 @@ LOGGING = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://imaginative-souffle-9a3cea.netlify.app/'
+    'https://imaginative-souffle-9a3cea.netlify.app/',
+    'http://127.0.0.1:5173/'
 ]
 
 CORS_ALLOWED_ORIGINS = [
     'https://imaginative-souffle-9a3cea.netlify.app/',  # Update with your frontend URL
+    'http://127.0.0.1:5173/'
 ]
 
 CORS_URLS_REGEX = r"^/api/.*$"
