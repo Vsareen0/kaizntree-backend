@@ -180,6 +180,14 @@ LOGGING = {
     },
 }
 
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8080',  # Update with your frontend URL
+#     'https://your-production-domain.com',
+# ]
+
+# For development, you can allow all origins
+CORS_ALLOW_ALL_ORIGINS = True
+
 # DEBUG_TOOLBAR_CONFIG = {
 #     'INTERCEPT_REDIRECTS': False,
 #     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
