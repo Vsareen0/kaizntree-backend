@@ -11,6 +11,14 @@ class JWTAuthenticationMiddleware:
         try:
             print('calling the middleware function')
 
+            if request.method == 'OPTIONS':
+                # Handle preflight requests by returning appropriate CORS headers
+                response = JsonResponse({})
+                response['Access-Control-Allow-Origin'] = '*'  # Adjust as needed
+                response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+                response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                return response
+
             paths_to_skip_csrf = [
                 '/swagger/',
                 '/admin/',
@@ -58,7 +66,12 @@ class JWTAuthenticationMiddleware:
 
             # Call the next middleware or view function
             response = self.get_response(request)
+            response['Access-Control-Allow-Origin'] = '*'  # Adjust as needed
+            response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+            response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        
             return response
+        
         except Exception as ex:
             template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(ex).__name__, ex.args)
