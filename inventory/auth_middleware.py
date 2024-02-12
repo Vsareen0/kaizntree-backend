@@ -1,6 +1,6 @@
 import jwt
 from django.conf import settings
-from django.http import Response
+from django.http import JsonResponse
 from rest_framework import status
 
 class JWTAuthenticationMiddleware:
@@ -38,19 +38,19 @@ class JWTAuthenticationMiddleware:
                 except jwt.ExpiredSignatureError:
                     # Token has expired
 
-                    return Response({
+                    return JsonResponse({
                         'code': status.HTTP_401_UNAUTHORIZED,
                         'message': 'Token has expired'
                     }, status=status.HTTP_401_UNAUTHORIZED)
                 
                 except jwt.InvalidTokenError:
                     # Token is invalid
-                    return Response({
+                    return JsonResponse({
                         'code': status.HTTP_401_UNAUTHORIZED,
                         'message': 'Invalid token'
                     }, status=status.HTTP_401_UNAUTHORIZED)
             else:
-                return Response({
+                return JsonResponse({
                     'code': status.HTTP_401_UNAUTHORIZED,
                     'message': 'Please provide Token'
                 }, status=status.HTTP_401_UNAUTHORIZED)
@@ -59,13 +59,12 @@ class JWTAuthenticationMiddleware:
             # Call the next middleware or view function
             response = self.get_response(request)
             return response
-        
         except Exception as ex:
             template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(ex).__name__, ex.args)
             print(message)
 
-            return Response({
+            return JsonResponse({
                 'code': status.HTTP_401_UNAUTHORIZED,
                 'message': 'Unable to authorize'
             }, status=status.HTTP_401_UNAUTHORIZED)
