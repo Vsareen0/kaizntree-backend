@@ -187,6 +187,8 @@ CORS_ALLOWED_ORIGINS = [
 
 # For development, you can allow all origins
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS='*'
+CORS_ALLOW_METHODS='*'
 
 # DEBUG_TOOLBAR_CONFIG = {
 #     'INTERCEPT_REDIRECTS': False,
