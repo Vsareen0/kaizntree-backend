@@ -24,7 +24,7 @@ class Item(models.Model):
     sku = models.CharField(max_length = 100, unique=True)
     name = models.CharField(max_length = 100)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     in_stock = models.IntegerField()
     available_stock = models.IntegerField()
     tags = models.ManyToManyField(Tags)
