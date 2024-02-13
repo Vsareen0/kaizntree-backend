@@ -244,11 +244,14 @@ def get_category(request):
     - name (string): The name of category .
     """
     try:
-        items = Category.objects.all()
+        paginator = PageNumberPagination()
+        categories = Category.objects.all()
+        paginator.page_size = categories.count() 
+        
+        result_page = paginator.paginate_queryset(categories, request)
+        serializer = CategorySerializer(result_page, many=True)
 
-        return Response({
-            'data': items
-        }, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(serializer.data)
     
     except Exception as ex:
         template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
@@ -281,11 +284,14 @@ def get_tags(request):
     - img (string): The img of tag.
     """
     try:
-        items = Tags.objects.all()
+        paginator = PageNumberPagination()
+        tags = Tags.objects.all()
+        paginator.page_size = tags.count() 
+        
+        result_page = paginator.paginate_queryset(tags, request)
+        serializer = TagSerializer(result_page, many=True)
 
-        return Response({
-            'data': items
-        }, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(serializer.data)
     
     except Exception as ex:
         template = "Get Items: An exception of type {0} occurred. Arguments:\n{1!r}"
