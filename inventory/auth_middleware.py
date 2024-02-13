@@ -41,6 +41,7 @@ class JWTAuthenticationMiddleware:
                 try:
                     # Decode and verify the token
                     payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+                    print('payload: ', payload)
                     # Add the decoded token payload to the request for later use
                     request.jwt_payload = payload
                 except jwt.ExpiredSignatureError:
