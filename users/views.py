@@ -95,7 +95,8 @@ def check_auth(request):
         - 400 Bad Request: Some error occured.
     """
     try:
-        user = User.objects.get(id=request.data['user_id'])
+        user = User.objects.get(id=request.jwt_payload['user_id'])
+        print('user: ', user)
 
         user_data = { 'user_id': user.id, 'username': user.username, 'email': user.email }
         return Response({ 'user': user_data, 'message': 'success' }, status=status.HTTP_200_OK)
