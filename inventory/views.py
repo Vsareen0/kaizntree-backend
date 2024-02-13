@@ -156,11 +156,13 @@ def create_item(request):
     """
     try:
         user_id = request.jwt_payload['user_id']
-        user = User.objects.get(id=user_id)
-        request.data['user_id'] = user
+        # user = User.objects.get(id=user_id)
+        # request.data['user_id'] = user
 
-        print('data: ', request.data)
-        serializer = AddItemSerializer(data=request.data, context={'request': request})
+        data = { **request.data, 'user_id': user_id }
+
+        print('data: ', data)
+        serializer = AddItemSerializer(data=data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
