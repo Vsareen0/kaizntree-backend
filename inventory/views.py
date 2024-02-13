@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import GetItemSerializer, AddItemSerializer, CategorySerializer, TagSerializer, DateRangeSerializer
-from .models import Item, Category, Tags
+from .models import Item, Category, Tags, User
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
@@ -155,7 +155,10 @@ def create_item(request):
         - 400 Bad Request: Invalid data provided/Some error occured.
     """
     try:
-        request.data['user_id'] = request.jwt_payload['user_id']
+        user_id = request.jwt_payload['user_id']
+        user = User.objects.get(id=user_id)
+        request.data['user_id'] = user
+
         print('data: ', request.data)
         serializer = AddItemSerializer(data=request.data, context={'request': request})
 
@@ -169,7 +172,7 @@ def create_item(request):
             }, status=status.HTTP_400_BAD_REQUEST)
         
     except Exception as ex:
-        template = "Create category: An exception of type {0} occurred. Arguments:\n{1!r}"
+        template = "Create item: An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
 
