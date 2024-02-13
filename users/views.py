@@ -29,8 +29,8 @@ def login(request):
                 'exp': datetime.utcnow() + timedelta(days=1)
             }
             token = jwt.encode(token_payload, settings.SECRET_KEY, algorithm='HS256')
-            
-            return Response({ 'token': token }, status=status.HTTP_200_OK)
+            user_data = { 'user_id': user.id, 'username': username, 'email': user.email }
+            return Response({ 'token': token, 'user': user_data }, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     except Exception as ex:
@@ -40,7 +40,7 @@ def login(request):
 
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
     
-    
+
 
 @api_view(['POST'])
 def create_account(request):
@@ -60,6 +60,21 @@ def create_account(request):
 
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
     
+@api_view(['GET'])
+def check_auth(request):
+    """
+    API endpoint to check token.
+
+    Parameters (headers):
+        - token
+    Returns:
+        - 200: OK.
+        - 400 Bad Request: Some error occured.
+    """
+    try:
+        return Response({'message': 'success'}, status=status.HTTP_200_OK)
+    except Exception as ex:
+        return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
