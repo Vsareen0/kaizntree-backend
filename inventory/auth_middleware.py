@@ -36,6 +36,7 @@ class JWTAuthenticationMiddleware:
 
             # Get the JWT token from the request
             token = request.headers.get('token')
+            print('payload token : ', token, ' ', request.headers)
 
             if token:
                 try:
