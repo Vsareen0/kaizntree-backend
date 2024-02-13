@@ -10,8 +10,21 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from drf_yasg.utils import swagger_auto_schema
+from .utils import (
+    get_headers, 
+    get_login_request_body,
+    get_create_account_request_body,
+    get_forgot_password_request_body,
+    get_reset_password_request_body
+)
 
 
+@swagger_auto_schema(
+    method='post',
+    manual_parameters=get_headers(),
+    request_body=get_login_request_body()
+)
 @api_view(['POST'])
 def login(request):
     try:
@@ -41,7 +54,11 @@ def login(request):
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
     
 
-
+@swagger_auto_schema(
+    method='post',
+    manual_parameters=get_headers(),
+    request_body=get_create_account_request_body()
+)
 @api_view(['POST'])
 def create_account(request):
     try:
@@ -60,6 +77,12 @@ def create_account(request):
 
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
     
+
+
+@swagger_auto_schema(
+    method='get',
+    manual_parameters=get_headers()
+)
 @api_view(['GET'])
 def check_auth(request):
     """
@@ -72,11 +95,19 @@ def check_auth(request):
         - 400 Bad Request: Some error occured.
     """
     try:
-        return Response({'message': 'success'}, status=status.HTTP_200_OK)
+        user = User.objects.get(id=request.data['user_id'])
+
+        user_data = { 'user_id': user.id, 'username': user.username, 'email': user.email }
+        return Response({ 'user': user_data, 'message': 'success' }, status=status.HTTP_200_OK)
     except Exception as ex:
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method='post',
+    manual_parameters=get_headers(),
+    request_body=get_forgot_password_request_body()
+)
 @api_view(['POST'])
 def forgot_password_request(request):
     """
@@ -116,6 +147,11 @@ def forgot_password_request(request):
         return Response({'message': 'Something went wrong !'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method='post',
+    manual_parameters=get_headers(),
+    request_body=get_reset_password_request_body()
+)
 @api_view(['POST'])
 def reset_password(request):
     """
