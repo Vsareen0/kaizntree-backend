@@ -155,9 +155,8 @@ def create_item(request):
         - 400 Bad Request: Invalid data provided/Some error occured.
     """
     try:
-        data = request.data
-        data['user_id'] = request.jwt_payload['user_id']
-        print('data: ', data)
+        request.data['user_id'] = request.jwt_payload['user_id']
+        print('data: ', request.data)
         serializer = AddItemSerializer(data=request.data, context={'request': request})
 
         if serializer.is_valid():

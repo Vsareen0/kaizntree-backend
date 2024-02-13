@@ -15,6 +15,9 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class AddItemSerializer(serializers.ModelSerializer):
+    in_stock = serializers.IntegerField(min_value=0)
+    available_stock = serializers.IntegerField(min_value=0)
+    
     class Meta:
         model = Item
         fields = ['id', 'sku', 'name', 'in_stock', 'available_stock', 'tags', 'category', 'user_id']
