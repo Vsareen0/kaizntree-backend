@@ -6,7 +6,6 @@ from .models import Item, Category, Tags, User
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from .utils import (
     get_headers, 
     get_create_category_request_body,
