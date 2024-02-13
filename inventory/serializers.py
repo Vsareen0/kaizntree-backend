@@ -17,7 +17,7 @@ class TagSerializer(serializers.ModelSerializer):
 class AddItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['id', 'sku', 'name', 'in_stock', 'available_stock', 'tags', 'category']
+        fields = ['id', 'sku', 'name', 'in_stock', 'available_stock', 'tags', 'category', 'user']
 
     def validate_in_stock(self, value):
         if value < 0:

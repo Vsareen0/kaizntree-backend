@@ -156,7 +156,7 @@ def create_item(request):
     """
     try:
         data = request.data
-        data['user_id'] = request.jwt_payload['user_id']
+        data['user'] = request.jwt_payload['user_id']
         print('user id: ', data['user_id'], ' ', request.jwt_payload['user_id'])
         serializer = AddItemSerializer(data=data, context={'request': request})
 
