@@ -159,7 +159,7 @@ def create_item(request):
         # user = User.objects.get(id=user_id)
         # request.data['user_id'] = user
 
-        data = { **request.data, 'user_id': user_id }
+        data = { **request.data, 'user': user_id }
 
         print('data: ', data)
         serializer = AddItemSerializer(data=data, context={'request': request})
