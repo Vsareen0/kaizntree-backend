@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from users.views import create_account, login, forgot_password_request, reset_password
+from users.views import create_account, login, forgot_password_request, reset_password, check_auth
 from inventory.views import create_item, create_category, get_items, create_tag, get_category, get_tags
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -40,6 +40,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('api/login', login),
+    path('api/check_auth', check_auth),
     path('api/create-account', create_account),
     path('api/forgot-password', forgot_password_request),
     path('api/reset-password', reset_password),
